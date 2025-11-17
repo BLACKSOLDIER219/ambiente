@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Ejercicio 4 Plus</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h2>Clasificación del Tipo de Residuo (con Descripciones)</h2>
+    <form onsubmit="clasificar(event)">
+        <label>Código: 
+            <select id="codigo" required>
+                <option value="">Selecciona</option>
+                <option value="1">1 - Orgánico</option>
+                <option value="2">2 - Plástico</option>
+                <option value="3">3 - Papel/Cartón</option>
+                <option value="4">4 - Vidrio</option>
+            </select>
+        </label>
+        <button type="submit">Clasificar</button>
+    </form>
+    <div id="resultado"></div>
+    <script>
+        function clasificar(event) {
+            event.preventDefault();
+            let codigo = parseInt(document.getElementById("codigo").value);
+            let residuo, desc;
+            switch (codigo) {
+                case 1: residuo = "Orgánico"; desc = "Se descompone naturalmente."; break;
+                case 2: residuo = "Plástico"; desc = "Reciclable, pero tarda en degradarse."; break;
+                case 3: residuo = "Papel/Cartón"; desc = "Fácil de reciclar."; break;
+                case 4: residuo = "Vidrio"; desc = "Reciclable infinitamente."; break;
+                default: residuo = "Código inválido"; desc = "";
+            }
+            document.getElementById("resultado").innerHTML = `<strong>Residuo:</strong> ${residuo}<br><strong>Descripción:</strong> ${desc}`;
+        }
+    </script>
+</body>
+</html>

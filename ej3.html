@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Ejercicio 3 Plus</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h2>Contar Cráteres Lunares Grandes (con Estadísticas)</h2>
+    <button onclick="contar()">Contar Cráteres</button>
+    <div id="resultado"></div>
+    <ul id="lista"></ul>
+    <script>
+        function contar() {
+            let contador = 0;
+            let diametros = [];
+            let diametro;
+            while ((diametro = parseFloat(prompt("Diámetro en km (0 para terminar):"))) !== 0) {
+                if (isNaN(diametro) || diametro < 0) {
+                    alert("Diámetro inválido, intenta de nuevo.");
+                    continue;
+                }
+                diametros.push(diametro);
+                if (diametro > 50) contador++;
+            }
+            let promedio = diametros.length > 0 ? diametros.reduce((a,b)=>a+b)/diametros.length : 0;
+            document.getElementById("resultado").textContent = `Cráteres grandes: ${contador}, Promedio diámetro: ${promedio.toFixed(2)} km`;
+            let lista = document.getElementById("lista");
+            lista.innerHTML = "";
+            diametros.forEach(d => {
+                let li = document.createElement("li");
+                li.textContent = `${d} km ${d > 50 ? '(Grande)' : ''}`;
+                lista.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>

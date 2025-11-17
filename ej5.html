@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Ejercicio 5 Plus</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h2>Registro de Niveles de Luz (con Estadísticas)</h2>
+    <form onsubmit="registrar(event)">
+        <label>Nivel en lux: <input type="number" id="lux" step="0.1" min="0"></label>
+        <button type="submit">Agregar</button>
+        <button type="button" onclick="terminar()">Terminar</button>
+    </form>
+    <div id="resultado"></div>
+    <ul id="lista"></ul>
+    <script>
+        let registros = [];
+        function registrar(event) {
+            event.preventDefault();
+            let lux = parseFloat(document.getElementById("lux").value);
+            if (isNaN(lux)) return;
+            registros.push(lux);
+            document.getElementById("lux").value = "";
+            actualizarLista();
+        }
+        function terminar() {
+            let promedio = registros.length > 0 ? registros.reduce((a,b)=>a+b)/registros.length : 0;
+            let noche = registros.filter(l => l < 5).length;
+            document.getElementById("resultado").textContent = `Registros: ${registros.length}, Promedio: ${promedio.toFixed(2)} lux, Noches profundas: ${noche}`;
+        }
+        function actualizarLista() {
+            let lista = document.getElementById("lista");
+            lista.innerHTML = "";
+            registros.forEach(l => {
+                let li = document.createElement("li");
+                li.textContent = `${l} lux ${l < 5 ? '(Noche profunda)' : ''}`;
+                lista.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>

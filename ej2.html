@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Ejercicio 2 Plus</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h2>Registrar Niveles de Ruido Ambiental (con Estadísticas)</h2>
+    <form onsubmit="registrar(event)">
+        <label>Número de mediciones: <input type="number" id="num" min="1" required></label>
+        <button type="submit">Registrar</button>
+    </form>
+    <div id="resultado"></div>
+    <ul id="lista"></ul>
+    <script>
+        function registrar(event) {
+            event.preventDefault();
+            let num = parseInt(document.getElementById("num").value);
+            let niveles = [];
+            let suma = 0;
+            for (let i = 0; i < num; i++) {
+                let db = parseFloat(prompt(`Medición ${i+1} en dB:`));
+                if (isNaN(db) || db < 0) {
+                    document.getElementById("resultado").textContent = "Error: Nivel inválido.";
+                    return;
+                }
+                niveles.push(db);
+                suma += db;
+            }
+            let promedio = suma / num;
+            let max = Math.max(...niveles);
+            let min = Math.min(...niveles);
+            document.getElementById("resultado").textContent = `Promedio: ${promedio.toFixed(2)} dB, Máx: ${max} dB, Mín: ${min} dB`;
+            let lista = document.getElementById("lista");
+            lista.innerHTML = "";
+            niveles.forEach(d => {
+                let li = document.createElement("li");
+                li.textContent = `${d} dB`;
+                lista.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>

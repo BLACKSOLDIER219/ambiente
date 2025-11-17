@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Ejercicio 1 Plus</title>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h2>Clasificación de Brillo Estelar (con Gráfico)</h2>
+    <form onsubmit="clasificar(event)">
+        <label>Magnitud aparente: <input type="number" id="magnitud" step="0.1" required></label>
+        <button type="submit">Clasificar</button>
+    </form>
+    <div id="resultado"></div>
+    <canvas id="grafico" width="400" height="200"></canvas>
+    <script>
+        function clasificar(event) {
+            event.preventDefault();
+            let magnitud = parseFloat(document.getElementById("magnitud").value);
+            if (isNaN(magnitud)) {
+                document.getElementById("resultado").textContent = "Error: Ingresa un número válido.";
+                return;
+            }
+            let clasificacion;
+            if (magnitud < -1) clasificacion = "Extremadamente brillante";
+            else if (magnitud < 1) clasificacion = "Muy brillante";
+            else if (magnitud < 3) clasificacion = "Brillante";
+            else if (magnitud < 6) clasificacion = "Débil";
+            else clasificacion = "No visible";
+            document.getElementById("resultado").textContent = `Magnitud: ${magnitud} - Clasificación: ${clasificacion}`;
+            
+            const ctx = document.getElementById('grafico').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Extremadamente brillante', 'Muy brillante', 'Brillante', 'Débil', 'No visible'],
+                    datasets: [{
+                        label: 'Rango de Magnitud',
+                        data: [-1, 1, 3, 6, 10],
+                        backgroundColor: ['gold', 'yellow', 'orange', 'gray', 'black']
+                    }]
+                }
+            });
+        }
+    </script>
+</body>
+</html>
